@@ -1,7 +1,9 @@
 package com.app.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,6 +15,7 @@ import com.app.dao.RecordEntryDAO;
 import com.app.model.RecordEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -44,5 +47,25 @@ public class HomeController {
 
 		recordEntryDAO.saveOrUpdate(new RecordEntry(id,startTime, endTime, cpuUsed, memUsed, diskUsed));
 		response.setContentType("application/json");
+	}
+
+	@RequestMapping(value = "/getState", method = RequestMethod.GET)
+	public void getState(HttpServletResponse response, HttpServletRequest request) throws ServletException, IOException {
+		String stateTime=request.getParameter("timestamp");
+		Timestamp state=null;
+		if(!com.mysql.jdbc.StringUtils.isNullOrEmpty(stateTime)) {
+			state = Timestamp.valueOf(stateTime);
+		}
+		else {
+			Date date= new Date();
+			state = new Timestamp(date.getTime());
+		}
+		response.setContentType("application/json");
+		RecordEntry result=recordEntryDAO.get(state);
+		if(result!=null) {
+			PrintWriter out = response.getWriter();
+			out.print(result.toString());
+		}
+
 	}
 }

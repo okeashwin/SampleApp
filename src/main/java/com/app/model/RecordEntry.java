@@ -68,4 +68,8 @@ public class RecordEntry {
     public float getDiskUsage() {
         return diskUsage;
     }
+
+    public String toString() {
+        return "CPU Used : "+cpuUsage+"\nMemory Used : "+memoryUsage+"\nDisk Used : "+diskUsage+"\n";
+    }
 }

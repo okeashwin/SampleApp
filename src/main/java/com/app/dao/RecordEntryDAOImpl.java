@@ -40,7 +40,7 @@ public class RecordEntryDAOImpl implements RecordEntryDAO {
 
     @Override
     public RecordEntry get(Timestamp timestamp) {
-        String query="SELECT * FROM record where startTime >='"+timestamp.toString()+"' AND endTime<='"+timestamp.toString()+"'";
+        String query="SELECT * FROM record where endTime >='"+timestamp.toString()+"' AND startTime<='"+timestamp.toString()+"'";
         logger.log(Level.INFO, "Query generated = "+query);
         List<RecordEntry> recordsList = jdbcTemplate.query(query, new RowMapper<RecordEntry>() {
             @Override
