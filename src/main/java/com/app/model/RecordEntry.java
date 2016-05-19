@@ -12,6 +12,18 @@ public class RecordEntry {
     private float memoryUsage;
     private float diskUsage;
 
+    public RecordEntry() {
+
+    }
+    public RecordEntry(int id, Timestamp startTime, Timestamp endTime, float cpuUsed, float memUsed, float diskUsed) {
+        this.id=id;
+        this.startTime=startTime;
+        this.endTime=endTime;
+        this.cpuUsage=cpuUsed;
+        this.memoryUsage=memUsed;
+        this.diskUsage=diskUsed;
+    }
+
     public void setId(int id) {
         this.id=id;
     }

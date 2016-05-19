@@ -2,6 +2,8 @@ package com.app.config;
 
 import javax.sql.DataSource;
 
+import com.app.dao.RecordEntryDAO;
+import com.app.dao.RecordEntryDAOImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -41,4 +43,8 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
 		return dataSource;
 	}
 
+	@Bean
+	public RecordEntryDAO getContactDAO() {
+		return new RecordEntryDAOImpl(getDataSource());
+	}
 }

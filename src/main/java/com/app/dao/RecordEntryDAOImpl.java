@@ -31,15 +31,17 @@ public class RecordEntryDAOImpl implements RecordEntryDAO {
                 + " VALUES (?, ?, ?, ?, ?, ?)";
         try {
             jdbcTemplate.update(query, recordEntry.getId(), recordEntry.getStartTime(), recordEntry.getEndTime(), recordEntry.getCpuUsage(), recordEntry.getMemoryUsage(), recordEntry.getDiskUsage());
+            logger.log(Level.INFO, "Record successfully added to the records table");
         } catch (Exception e) {
             logger.log(Level.WARNING, "An exception in saveOrUpdate() method");
+            logger.log(Level.WARNING, e.toString());
         }
     }
 
     @Override
     public RecordEntry get(Timestamp timestamp) {
         String query="SELECT * FROM record where startTime >='"+timestamp.toString()+"' AND endTime<='"+timestamp.toString()+"'";
-        logger.log(Level.INFO, "Query generated =                                                                                                               "+query);
+        logger.log(Level.INFO, "Query generated = "+query);
         List<RecordEntry> recordsList = jdbcTemplate.query(query, new RowMapper<RecordEntry>() {
             @Override
             public RecordEntry mapRow(ResultSet rs, int arg1) throws SQLException {
